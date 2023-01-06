@@ -1,0 +1,49 @@
+name: daisyui
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get date
+        run: |
+          echo "now=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
+          echo "${{ env.now }}"
+          
+      - name: Clone Github Repo Action
+        uses: GuillaumeFalourd/clone-github-repo-action@v2
+        with:
+          owner: 'saadeghi'
+          repository: 'daisyui'
+
+      - name: Install and Build
+        run: |
+          cd daisyui/src/docs
+          npm install
+          npm run build
+          
+      - name: zip
+        run: cd daisyui/src/docs && zip -r daisyui.zip build/
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "${{ env.now }}"
+          release_name: DaisyUI
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./daisyui/src/docs/daisyui.zip
+          asset_name: daisyui.zip
+          asset_content_type: application/zip
