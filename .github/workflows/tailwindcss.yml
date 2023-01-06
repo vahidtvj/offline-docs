@@ -1,0 +1,49 @@
+name: tailwindcss
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get date
+        run: |
+          echo "now=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
+          echo "${{ env.now }}"
+          
+      - name: Clone Github Repo Action
+        uses: GuillaumeFalourd/clone-github-repo-action@v2
+        with:
+          owner: 'tailwindlabs'
+          repository: 'tailwindcss.com'
+
+      - name: Install and Build
+        run: |
+          cd tailwindcss.com
+          yarn
+          yarn export
+          
+      - name: zip
+        run: cd tailwindcss.com/out && zip -r tailwindcss.zip *
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "${{ env.now }}"
+          release_name: tailwindcss
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./tailwindcss.com/out/tailwindcss.zip
+          asset_name: tailwindcss.zip
+          asset_content_type: application/zip
