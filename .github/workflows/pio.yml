@@ -21,6 +21,7 @@ jobs:
         run: |
           cd platformio-docs
           sudo apt install python3-sphinx
+          pip install sphinx_rtd_theme
           make html
           
       - name: zip
