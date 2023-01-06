@@ -32,7 +32,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "${{ env.now }}"
+          tag_name: "daisyui_${{ env.now }}"
           release_name: DaisyUI
           draft: false
           prerelease: false
