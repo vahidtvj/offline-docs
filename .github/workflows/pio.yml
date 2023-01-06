@@ -21,7 +21,7 @@ jobs:
         run: |
           cd platformio-docs
           sudo apt install python3-sphinx
-          make
+          make html
           
       - name: zip
         run: cd platformio-docs/_build && zip -r pio.zip *
