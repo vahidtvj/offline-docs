@@ -20,6 +20,7 @@ jobs:
       - name: Install and Build
         run: |
           cd platformio-docs
+          sudo apt install python3-sphinx
           make
           
       - name: zip
