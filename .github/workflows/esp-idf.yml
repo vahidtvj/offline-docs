@@ -26,7 +26,7 @@ jobs:
           source export.sh
           pip install esp-docs linuxdoc
           cd docs
-          build-docs -l en -t esp32 build
+          build-docs -l en -t esp32
           zip -r esp-idf-docs.zip _build
 
       - name: Upload Artifact
