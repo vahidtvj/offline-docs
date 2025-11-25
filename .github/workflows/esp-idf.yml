@@ -22,11 +22,8 @@ jobs:
           python3 -m venv .venv
           source .venv/bin/activate
           pip install esp-docs
+          cd docs
           build-docs -l en build
-
-      - name: Archive build
-        run: |
-          cd docs/
           zip -r esp-idf-docs.zip _build
 
       - name: Upload Artifact
