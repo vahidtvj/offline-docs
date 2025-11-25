@@ -22,7 +22,7 @@ jobs:
           python3 -m venv .venv
           source .venv/bin/activate
           pip install esp-docs
-          ./build-docs -l en build
+          build-docs -l en build
 
       - name: Archive build
         run: |
