@@ -27,7 +27,7 @@ jobs:
           pip install esp-docs linuxdoc
           cd docs
           build-docs -l en -t esp32
-          zip -r esp-idf-docs.zip _build
+          zip esp-idf-docs.zip _build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
