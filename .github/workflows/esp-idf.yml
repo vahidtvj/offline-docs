@@ -1,0 +1,37 @@
+name: Build ESP-IDF Docs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (with submodules)
+      uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get install -y git make python3 python3-pip python3-venv doxygen graphviz
+
+      - name: Setup Python venv
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install esp-docs
+          ./build-docs -l en build
+
+      - name: Archive build
+        run: |
+          cd docs/
+          zip -r esp-idf-docs.zip _build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp-idf-docs-html
+          path: docs/_build/en/generic/esp-idf-docs.zip
+
