@@ -22,7 +22,7 @@ jobs:
           python3 -m venv .venv
           source .venv/bin/activate
           pip install esp-docs
-          cd docs
+          cd esp-id/docs
           build-docs -l en build
           zip -r esp-idf-docs.zip _build
 
@@ -30,5 +30,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: esp-idf-docs-html
-          path: docs/_build/en/generic/esp-idf-docs.zip
+          path: ./esp-idf/docs/esp-idf-docs.zip
 
