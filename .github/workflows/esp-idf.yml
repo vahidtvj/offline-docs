@@ -10,9 +10,11 @@ jobs:
     steps:
       - name: Checkout (with submodules)
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
+          
+      - name: Clone ESP-IDF
+        run: |
+          git clone --recursive https://github.com/espressif/esp-idf.git
+          
       - name: Install system dependencies
         run: |
           sudo apt-get install -y git make python3 python3-pip python3-venv doxygen graphviz
