@@ -19,10 +19,8 @@ jobs:
 
       - name: Setup Python venv
         run: |
-          python3 -m venv .venv
-          source .venv/bin/activate
           pip install esp-docs
-          cd esp-id/docs
+          cd esp-idf/docs
           build-docs -l en build
           zip -r esp-idf-docs.zip _build
 
