@@ -24,7 +24,7 @@ jobs:
           cd esp-idf
           ./install.sh
           source export.sh
-          pip install esp-docs
+          pip install esp-docs linuxdoc
           cd docs
           build-docs -l en build
           zip -r esp-idf-docs.zip _build
