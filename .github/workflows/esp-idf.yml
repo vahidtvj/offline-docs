@@ -22,6 +22,7 @@ jobs:
       - name: Setup Python venv
         run: |
           cd esp-idf
+          ./install.sh
           source export.sh
           pip install esp-docs
           cd docs
